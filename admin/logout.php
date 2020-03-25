@@ -1,5 +1,5 @@
 <?php
-    // session_start();
+    session_start();
     if (isset($_SESSION['mail']) && isset($_SESSION['pass'])){
         session_destroy();
     }

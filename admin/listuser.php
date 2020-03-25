@@ -30,7 +30,7 @@
 										<use xlink:href="#stroked-checkmark"></use>
 									</svg>Đã thêm thành công<a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
 								</div>
-								<a href="adduser.html" class="btn btn-primary">Thêm Thành viên</a>
+								<a href="index.php?layout=add_user" class="btn btn-primary">Thêm Thành viên</a>
 								<table class="table table-bordered" style="margin-top:20px;">
 
 									<thead>
@@ -45,31 +45,24 @@
 										</tr>
 									</thead>
 									<tbody>
-									
+									<?php
+									$sql = "SELECT * FROM users ORDER BY id DESC";
+									$query = mysqli_query($connect,$sql);
+									while ($row = mysqli_fetch_assoc($query)) {
+									?>
 										<tr>
-											<td>1</td>
-											<td>Admin@gmail.com</td>
-											<td>Nguyễn thế phúc</td>
-											<td>Thường tín</td>
-                                            <td>0356653300</td>
+											<td><?php echo $row['id'];?></td>
+											<td><?php echo $row['email']; ?></td>
+											<td><?php echo $row['name']; ?></td>
+											<td><?php echo $row['address']; ?></td>
+                                            <td><?php echo $row['phone']; ?></td>
                                             <td>1</td>
 											<td>
-												<a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
-												<a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
-											</td>
-                                        </tr>
-                                        <tr>
-											<td>1</td>
-											<td>Admin@gmail.com</td>
-											<td>Nguyễn thế phúc</td>
-											<td>Thường tín</td>
-                                            <td>0356653300</td>
-                                            <td>1</td>
-											<td>
-												<a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
+												<a href="index.php?layout=edit_user&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
 												<a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
 											</td>
 										</tr>
+									<?php } ?>
 								
 									</tbody>
 								</table>
