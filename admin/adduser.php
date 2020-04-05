@@ -10,7 +10,9 @@ if (isset($_POST['sbm'])) {
     $query = mysqli_query($connect,$sql);
     $num_rows = mysqli_num_rows($query);
     if($num_rows > 0){
-        $error = '<div class="alert alert-danger">email đã tồn lại!</div>';
+        $error = '  <div class="alert alert-danger" role="alert">
+                        <strong>email đã tồn tại!</strong>
+                    </div>';
     }else if($pass != $res_pass){
         $error = '<div class="alert alert-danger">mật khẩu ko khớp !</div>';
     }else{
@@ -34,16 +36,13 @@ if (isset($_POST['sbm'])) {
                 <div class="panel panel-primary">
                     <div class="panel-heading"><i class="fas fa-user"></i> Thêm thành viên</div>
                     <div class="panel-body">
-                    <?php if(isset($error)){ echo $error;} ?>
                     <form role="form" method="POST">
                         <div class="row justify-content-center" style="margin-bottom:40px">
+                        <?php if(isset($error)){ echo $error;} ?>   
                             <div class="col-md-8 col-lg-8 col-lg-offset-2">
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input type="text" name="email" class="form-control">
-                                  <div class="alert alert-danger" role="alert">
-                                      <strong>email đã tồn tại!</strong>
-                                  </div>
                                 </div>
                                 <div class="form-group">
                                     <label>password</label>

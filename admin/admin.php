@@ -36,12 +36,12 @@
 		<form role="search">
 		</form>
                		<ul class="nav menu">
-			<li class="active"><a href="index.html"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Tổng quan</a></li>
-			<li><a href="category.html"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper" /></svg> Danh Mục</a></li>
-			<li><a href="listproduct.html"><svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg> Sản phẩm</a></li>
+			<li class="<?php if(!isset($_GET['layout'])){echo 'active';} ?>"><a href="index.php"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Tổng quan</a></li>
+			<li class="<?php if(($_GET['layout'])=='category'){ echo 'active';} ?>" ><a href="index.php?layout=category"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper" /></svg> Danh Mục</a></li>
+			<li class="<?php if(($_GET['layout'])=='product'){ echo 'active';} ?>" ><a href="index.php?layout=product"><svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg> Sản phẩm</a></li>
 			<li><a href="order.html"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad" /></svg> Đơn hàng</a></li>
 			<li role="presentation" class="divider"></li>
-			<li><a href="index.php?layout=user"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Quản lý thành viên</a></li>
+			<li class="<?php if(($_GET['layout'])=='user'){ echo 'active';} ?>" ><a href="index.php?layout=user"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Quản lý thành viên</a></li>
 		
 		</ul>
 
@@ -55,7 +55,7 @@
 			case 'user': include_once('listuser.php');break;
 			case 'edit_user': include_once('edituser.php');break;
 			case 'add_user': include_once('adduser.php');break;
-			case 'category': include_once('category.php');break;
+			case 'category': include_once('listcate.php');break;
 			case 'edit_cat': include_once('editcategory.php');break;
 			case 'add_cat': include_once('addcategory.php');break;
 			case 'product': include_once('listproduct.php');break;

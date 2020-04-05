@@ -59,7 +59,7 @@
                                             <td>1</td>
 											<td>
 												<a href="index.php?layout=edit_user&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
-												<a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
+												<a onclick="return delUser('<?php echo $row['name'] ?>') " href="delete_user.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
 											</td>
 										</tr>
 									<?php } ?>
@@ -85,11 +85,10 @@
 			</div>
 		</div>
 	</div>
-			<!--end main-->
-
-			
-			
-			
-
-
-
+<!--end main-->
+<script >
+	function delUser(name){
+		return confirm('Bạn có muốn xóa '+name+' không?')
+	}
+</script>
+		

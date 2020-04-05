@@ -17,18 +17,42 @@
 		</div>
 		<!--/.row-->
 
-
+		<?php
+		$id = $_GET['id'];
+		$sql = "SELECT * FROM categories WHERE id = '$id'";
+		$query = mysqli_query($connect,$sql);
+		$row = mysqli_fetch_assoc($query);
+		if (isset($_POST['sbm'])) {
+			$name = $_POST['name'];
+			$sql = "SELECT * FROM categories WHERE name = '$name' AND id != '$id' ";
+			$query = mysqli_query($connect,$sql);
+			$num_rows = mysqli_num_rows($query);
+			if($num_rows > 0){
+				$error = 
+				'<div class="alert bg-danger" role="alert">
+					<svg class="glyph stroked cancel">
+						<use xlink:href="#stroked-cancel"></use>
+					</svg>Tên danh mục đã tồn tại!<a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+				</div>';
+			}else{
+				$sql = "INSERT INTO categories (name) VALUE ('$name')";
+				mysqli_query($connect,$sql);
+				header('location: index.php?layout=category');
+			}
+		}
+		?>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-body">
+						<form method="post" >
 						<div class="row">
 							<div class="col-md-5">
 
 								<div class="form-group">
 									<label for="">Danh mục cha:</label>
 									<select class="form-control" name="parent" >
-										<option>----ROOT----</option>
+										<option value="0" selected >----ROOT----</option>
 										<option>Nam</option>
 										<option>---|Áo khoác nam</option>
 										<option>---|---|Áo khoác nam</option>
@@ -38,16 +62,17 @@
 								</div>
 								<div class="form-group">
 									<label for="">Tên Danh mục</label>
-									<input type="text" class="form-control" name="name"  placeholder="Tên danh mục mới" value="Áo khoác nữ">
-									<div class="alert bg-danger" role="alert">
-										<svg class="glyph stroked cancel">
-											<use xlink:href="#stroked-cancel"></use>
-										</svg>Tên danh mục đã tồn tại!<a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
-									</div>
+									<?php if (isset($error)) {
+										echo $error;
+									} ?>
+									<input type="text" class="form-control" name="name"  placeholder="Tên danh mục mới" value="<?php echo $row['name']; ?>">
+									
 								</div>
-								<button type="submit" class="btn btn-primary">Sửa danh mục</button>
+								<button type="submit" name="sbm" class="btn btn-primary">Sửa danh mục</button>
 							</div>
 						</div>
+					</form>
+						
 					</div>
 				</div>
 

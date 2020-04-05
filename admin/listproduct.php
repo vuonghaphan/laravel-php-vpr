@@ -1,4 +1,16 @@
+<?php
+$sql = "SELECT * FROM products order By id desc limit 5";
+$query = mysqli_query($connect,$sql);
+$sql_cat = "SELECT * FROM categories";
+$query_cat = mysqli_query($connect,$sql_cat);
+$zia = mysqli_fetch_assoc($query_cat);
 
+?>
+<script>
+	function delItem(name){
+		return confirm('bạn có muốn xóa '+name+' không?')
+	}
+</script>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -30,7 +42,7 @@
 										<use xlink:href="#stroked-checkmark"></use>
 									</svg>Đã thêm thành công<a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
 								</div>
-								<a href="addproduct.html" class="btn btn-primary">Thêm sản phẩm</a>
+								<a href="index.php?layout=add_product" class="btn btn-primary">Thêm sản phẩm</a>
 								<table class="table table-bordered" style="margin-top:20px;">
 
 									<thead>
@@ -43,56 +55,32 @@
 											<th width='18%'>Tùy chọn</th>
 										</tr>
 									</thead>
-									<tbody>
-									
+									<tbody>					
+										<?php
+										while ($row = mysqli_fetch_assoc($query)) {
+										?>				
 										<tr>
-											<td>1</td>
+											<td><?php echo $row['id']; ?></td>
 											<td>
 												<div class="row">
-													<div class="col-md-3"><img src="img/ao-khoac.jpg" alt="Áo đẹp" width="100px" class="thumbnail"></div>
+													<div class="col-md-3"><img src="img/<?php echo $row['avatar']; ?>" alt="Áo đẹp" width="100px" class="thumbnail"></div>
 													<div class="col-md-9">
-														<p><strong>Mã sản phẩm : SP01</strong></p>
-														<p>Tên sản phẩm :Áo Khoác Bomber Nỉ Xanh Lá Cây AK179</p>
-														
-														
+														<p><strong>Mã sản phẩm : <?php echo $row['sku']; ?></strong></p>
+														<p>Tên sản phẩm :<?php echo $row['name']; ?></p>
 													</div>
 												</div>
 											</td>
-											<td>500.000 VND</td>
+											<td><?php echo $row['price']; ?> VND</td>
 											<td>
-												<a class="btn btn-success" href="#" role="button">Còn hàng</a>
+												<a class="btn btn-<?php if($row['quantity'] >0 ){ echo 'success';}else{ echo 'danger';} ?>" href="#" role="button"><?php if($row['quantity'] > 0){ echo 'Còn hàng';}else{echo 'Hết hàng';} ?></a>
 											</td>
-											<td>Áo Khoác Nam</td>
+											<td><?php if($row['category_id'] == $zia['id']){ echo $zia['name']; } ?></td>
 											<td>
-												<a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
-												<a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
+												<a href="index.php?layout=edit_product&id=<?php echo $row['id']; ?>" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
+												<a onclick="return delItem('<?php echo $row['name']; ?>')" href="delete_prd.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
 											</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>
-												<div class="row">
-													<div class="col-md-3"><img src="img/ao-khoac.jpg" alt="Áo đẹp" width="100px" class="thumbnail"></div>
-													<div class="col-md-9">
-														<p><strong>Mã sản phẩm : SP01</strong></p>
-														<p>Tên sản phẩm :Áo Khoác Bomber Nỉ Xanh Lá Cây AK179</p>
-														
-														
-													</div>
-												</div>
-											</td>
-											<td>500.000 VND</td>
-											<td>
-												<a class="btn btn-danger" href="#" role="button">hết hàng</a>
-											</td>
-											<td>Áo Khoác Nam</td>
-											<td >
-												<a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
-												<a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
-											</td>
-										</tr>
-
-
+										</tr>	
+										<?php } ?>
 									</tbody>
 								</table>
 								<div align='right'>

@@ -2,6 +2,7 @@
 $id = $_GET['id'];
 $sql = "SELECT * FROM users WHERE id = '$id'";
 $query = mysqli_query($connect,$sql);
+$row = mysqli_fetch_assoc($query);
 if (isset($_POST['sbm'])) {
     $mail = $_POST['email'];
     $pass = $_POST['password'];
@@ -42,10 +43,6 @@ if (isset($_POST['sbm'])) {
                     <?php if(isset($error)){ echo $error;} ?>
                     <div class="panel-body">
                     <form role="form" method="POST">
-                        <?php
-                        while ($row = mysqli_fetch_assoc($query)){
-                        
-                        ?>
                         <div class="row justify-content-center" style="margin-bottom:40px">
                             <div class="col-md-8 col-lg-8 col-lg-offset-2">
                              
@@ -90,7 +87,7 @@ if (isset($_POST['sbm'])) {
                                 </div>
                             </div>
                         </div>
-                        <?php } ?>
+                    
                     </form>
                         <div class="clearfix"></div>
                     </div>
