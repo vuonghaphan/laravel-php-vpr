@@ -39,7 +39,7 @@
 			<li class="<?php if(!isset($_GET['layout'])){echo 'active';} ?>"><a href="index.php"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Tổng quan</a></li>
 			<li class="<?php if(($_GET['layout'])=='category'){ echo 'active';} ?>" ><a href="index.php?layout=category"><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper" /></svg> Danh Mục</a></li>
 			<li class="<?php if(($_GET['layout'])=='product'){ echo 'active';} ?>" ><a href="index.php?layout=product"><svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg> Sản phẩm</a></li>
-			<li><a href="order.html"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad" /></svg> Đơn hàng</a></li>
+			<li class="<?php if(($_GET['layout']) == 'processed'){ echo ' active';} ?>" ><a href="index.php?layout=processed"><svg class="glyph stroked notepad "><use xlink:href="#stroked-notepad" /></svg> Đơn hàng</a></li>
 			<li role="presentation" class="divider"></li>
 			<li class="<?php if(($_GET['layout'])=='user'){ echo 'active';} ?>" ><a href="index.php?layout=user"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Quản lý thành viên</a></li>
 		

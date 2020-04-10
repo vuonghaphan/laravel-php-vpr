@@ -38,7 +38,7 @@
 											<td>0356653300</td>
 											<td>Thường tín</td>
 											<td>
-												<a href="detailorder.html" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>Xử lý</a>
+												<a href="index.php?layout=processed" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>Xử lý</a>
 
 											</td>
 										</tr>

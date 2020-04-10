@@ -1,10 +1,39 @@
 <?php
-$sql = "SELECT * FROM products order By id desc limit 5";
+
+if (isset($_GET['page'])) {
+	$page = $_GET['page'];
+}else {
+	$page = 1;
+}
+$row_per_page = 5;
+$per_row = $page*$row_per_page -$row_per_page;
+$total_row = mysqli_num_rows(mysqli_query($connect,"SELECT * FROM products"));
+$total_pages = ceil($total_row/$row_per_page);
+$list_pages = '';
+$page_prev = $page - 1;
+if ($page_prev <= 1) {
+	$page_prev = 1;
+} 
+$list_pages .= '<li class="page-item"><a class="page-link" href="index.php?layout=product&page='.$page_prev.'">Trở lại</a></li>';
+for ($i=1; $i <= $total_pages ; $i++) { 
+	if ($i == $page) {
+		$active = 'active';
+	}else{
+		$active = '';
+	}
+	$list_pages .= '<li class="page-item '.$active.'"><a class="page-link" href="index.php?layout=product&page='.$i.'">'.$i.'</a></li>';
+}
+$page_next = $page + 1;
+if ($page_next >= $total_pages) {
+	$page_next = $total_pages;
+}
+$list_pages .= '<li class="page-item"><a class="page-link" href="index.php?layout=product&page='.$page_next.'">tiếp theo</a></li>';
+
+$sql = "SELECT * FROM products order By id desc limit $per_row,$row_per_page";
 $query = mysqli_query($connect,$sql);
 $sql_cat = "SELECT * FROM categories";
 $query_cat = mysqli_query($connect,$sql_cat);
 $zia = mysqli_fetch_assoc($query_cat);
-
 ?>
 <script>
 	function delItem(name){
@@ -85,11 +114,12 @@ $zia = mysqli_fetch_assoc($query_cat);
 								</table>
 								<div align='right'>
 									<ul class="pagination">
-										<li class="page-item"><a class="page-link" href="#">Trở lại</a></li>
+										<?php echo $list_pages; ?>
+										<!-- <li class="page-item"><a class="page-link" href="#">Trở lại</a></li>
 										<li class="page-item"><a class="page-link" href="#">1</a></li>
 										<li class="page-item"><a class="page-link" href="#">2</a></li>
 										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#">tiếp theo</a></li>
+										<li class="page-item"><a class="page-link" href="#">tiếp theo</a></li> -->
 									</ul>
 								</div>
 							</div>

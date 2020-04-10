@@ -1,4 +1,37 @@
+<?php
+if (isset($_GET['page'])){
+	$page = $_GET['page'];
+}else{
+	$page = 1;
+}
+$row_per_page = 3; 
+$per_row = $page*$row_per_page - $row_per_page;
+$total_rows = mysqli_num_rows(mysqli_query($connect,"SELECT * FROM users"));
+$total_pages = ceil($total_rows/$row_per_page);
+$list_pages = '';
+$page_prev = $page -1;
+if ($page_prev <= 0) {
+	$page_prev = 1;
+}
+$list_pages .='<li class="page-item"><a class="page-link" href="index.php?layout=user&page='.$page_prev.'">Trở lại</a></li>';
 
+for ($i=1; $i <= $total_pages ;$i++) { 
+	if ($i == $page) {
+		$active = 'active';
+	}else{
+		$active = '';
+	}
+	$list_pages .='<li class="page-item '.$active.'"><a class="page-link" href="index.php?layout=user&page='.$i.'">'.$i.'</a></li>';
+
+}
+
+$page_next = $page + 1;
+if ($page_next >= $total_pages) {
+	$page_next = $total_pages;
+}
+$list_pages .='<li class="page-item"><a class="page-link" href="index.php?layout=user&page='.$page_next.'">tiếp theo</a></li>';
+
+?>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -32,7 +65,6 @@
 								</div>
 								<a href="index.php?layout=add_user" class="btn btn-primary">Thêm Thành viên</a>
 								<table class="table table-bordered" style="margin-top:20px;">
-
 									<thead>
 										<tr class="bg-primary">
 											<th>ID</th>
@@ -46,7 +78,7 @@
 									</thead>
 									<tbody>
 									<?php
-									$sql = "SELECT * FROM users ORDER BY id DESC";
+									$sql = "SELECT * FROM users ORDER BY id DESC LIMIT $per_row,$row_per_page";
 									$query = mysqli_query($connect,$sql);
 									while ($row = mysqli_fetch_assoc($query)) {
 									?>
@@ -68,11 +100,12 @@
 								</table>
 								<div align='right'>
 									<ul class="pagination">
-										<li class="page-item"><a class="page-link" href="#">Trở lại</a></li>
+										<!-- <li class="page-item"><a class="page-link" href="#">Trở lại</a></li>
 										<li class="page-item"><a class="page-link" href="#">1</a></li>
 										<li class="page-item"><a class="page-link" href="#">2</a></li>
 										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#">tiếp theo</a></li>
+										<li class="page-item"><a class="page-link" href="#">tiếp theo</a></li> -->
+										<?php echo $list_pages; ?>
 									</ul>
 								</div>
 							</div>
